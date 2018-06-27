@@ -32,6 +32,7 @@ class SelectIO : public VirtualIO {
 
  protected:
   void IOLoop() override;
+
  private:
   FileDescriptorHandler fd_handler_;
 

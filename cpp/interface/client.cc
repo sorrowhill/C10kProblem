@@ -10,6 +10,7 @@
 #include <thread>
 
 #include "select/select_io.h"
+#include "poll/poll_io.h"
 
 std::shared_ptr<c10k::VirtualIO> the_io;
 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  the_io = std::make_shared<c10k::SelectIO>();
+  the_io = std::make_shared<c10k::PollIO>();
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
