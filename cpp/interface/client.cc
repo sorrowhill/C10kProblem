@@ -22,8 +22,6 @@ int main(int argc, char *argv[]) {
 
   uint16_t remote_port = 0;
 
-  std::atomic_int nb_of_messages_sent;
-
   try {
     remote_port = boost::lexical_cast<uint16_t>(argv[1]);
   } catch (boost::bad_lexical_cast &e){
