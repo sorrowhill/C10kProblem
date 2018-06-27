@@ -25,25 +25,17 @@ SET(C10k_SELECT_SOURCES select/select_io.h select/select_io.cc)
 # Poll IO
 SET(C10k_POLL_SOURCES poll/poll_io.h poll/poll_io.cc)
 
-add_executable(select_server
+add_executable(c10k_server
         ${C10k_COMMON_HEADERS}
-        ${C10k_SELECT_SOURCES} interface/server.cc)
+        ${C10k_SELECT_SOURCES}
+        ${C10k_POLL_SOURCES}
+        interface/server.cc)
 
-add_executable(select_client
+add_executable(c10k_client
         ${C10k_COMMON_HEADERS}
-        ${C10k_SELECT_SOURCES} interface/client.cc)
+        ${C10k_SELECT_SOURCES}
+        ${C10k_POLL_SOURCES}
+        interface/client.cc)
 
-target_link_libraries(select_server -lgflags -lglog)
-target_link_libraries(select_client -lgflags -lglog)
-
-
-add_executable(poll_server
-        ${C10k_COMMON_HEADERS}
-        ${C10k_POLL_SOURCES} poll/server.cc)
-
-add_executable(poll_client
-        ${C10k_COMMON_HEADERS}
-        ${C10k_POLL_SOURCES} poll/client.cc)
-
-target_link_libraries(poll_server -lgflags -lglog)
-target_link_libraries(poll_client -lgflags -lglog)
+target_link_libraries(c10k_server -lgflags -lglog)
+target_link_libraries(c10k_client -lgflags -lglog)
