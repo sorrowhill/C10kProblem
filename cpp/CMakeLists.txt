@@ -18,7 +18,9 @@ include_directories(${CMAKE_SOURCE_DIR})
 SET(C10k_COMMON_HEADERS
         common/c10k_memory.h
         common/c10k_types.h
+        interface/virtual_io.h
         )
+
 # Select IO
 SET(C10k_SELECT_SOURCES select/select_io.h select/select_io.cc)
 # Poll IO

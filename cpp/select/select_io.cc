@@ -10,10 +10,7 @@
 namespace c10k {
 
 SelectIO::SelectIO()
-    : kill_flags_(false),
-      block_mode_(false),
-      requests_handled(0),
-      max_fd_(-1) {
+    : max_fd_(-1) {
   FD_ZERO(&master_set_);
 }
 
@@ -44,55 +41,19 @@ void SelectIO::RemoveSession(const int &fd) {
 }
 
 
-int64_t SelectIO::GetRequestsHandled() const {
-  return requests_handled;
-}
-
-
-bool SelectIO::Start(const bool &block) {
-  kill_flags_ = false;
-  try {
-    thread_ = std::thread([&](){
-      while (not kill_flags_) {
-        IOLoop();
-      }
-    });
-  } catch (std::exception &e) {
-    return false;
-  }
-
-  block_mode_ = true;
-  if (block_mode_) {
-    thread_.join();
-  }
-
-  return true;
-}
-
-
-void SelectIO::Stop() {
-  kill_flags_ = true;
-  if (not block_mode_ && thread_.joinable()) {
-    thread_.join();
-  }
-}
-
-
 void SelectIO::IOLoop() {
   fd_set working_set = master_set_;
 
   int nb_fd = select(max_fd_ + 1, &working_set, nullptr, nullptr, nullptr);
   if (nb_fd < 0) {
-    kill_flags_ = true;  // stop
+    Stop();
     return;
   }
 
   for (int current_fd = 0; current_fd <= max_fd_; ++current_fd) {
     if (FD_ISSET(current_fd, &working_set)) {
-
       fd_handler_(current_fd);
-
-      ++requests_handled;
+      IncrRequestsHandled();
       if (--nb_fd <= 0) {
         return;
       }

@@ -9,7 +9,7 @@
 
 #include "select/select_io.h"
 
-std::shared_ptr<c10k::SelectIO> the_io;
+std::shared_ptr<c10k::VirtualIO> the_io;
 
 int main(int argc, char *argv[]) {
   const uint16_t port = 8040;

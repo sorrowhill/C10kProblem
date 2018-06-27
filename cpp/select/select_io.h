@@ -6,6 +6,7 @@
 #define C10KPROBLEM_SELECT_SELECT_IO_H_
 
 #include <common/c10k_types.h>
+#include <interface/virtual_io.h>
 
 #include <csignal>
 #include <cstdint>
@@ -19,29 +20,19 @@
 
 namespace c10k {
 
-class SelectIO {
+class SelectIO : public VirtualIO {
  public:
-  typedef std::function<void (const int &fd)> FileDescriptorHandler;
 
   SelectIO();
 
-  void RegisterHandler(const FileDescriptorHandler &fd_handler);
+  void RegisterHandler(const FileDescriptorHandler &fd_handler) override;
 
-  void AddSession(const int &fd);
-  void RemoveSession(const int &fd);
+  void AddSession(const int &fd) override;
+  void RemoveSession(const int &fd) override;
 
-  int64_t GetRequestsHandled() const;
-
-  bool Start(const bool &block);
-  void Stop();
-
+ protected:
+  void IOLoop() override;
  private:
-  void IOLoop();
-  std::thread thread_;
-  volatile bool kill_flags_;
-  bool block_mode_;
-  std::atomic_int64_t requests_handled;
-
   FileDescriptorHandler fd_handler_;
 
   std::mutex mutex_;
