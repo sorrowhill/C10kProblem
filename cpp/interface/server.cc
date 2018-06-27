@@ -3,7 +3,6 @@
 //
 
 #include <common/c10k_types.h>
-#include <common/c10k_memory.h>
 
 #include <thread>
 

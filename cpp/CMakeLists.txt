@@ -16,7 +16,6 @@ find_package(glog)
 include_directories(${CMAKE_SOURCE_DIR})
 
 SET(C10k_COMMON_HEADERS
-        common/c10k_memory.h
         common/c10k_types.h
         interface/virtual_io.h
         )

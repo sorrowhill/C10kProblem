@@ -2,10 +2,9 @@
 // Copyright (c) 2018, Gigone Lee, Under the MIT License.
 //
 
-#include <common/c10k_types.h>
-#include <common/c10k_memory.h>
-
 #include <boost/lexical_cast.hpp>
+
+#include <common/c10k_types.h>
 
 #include <netdb.h>
 #include <thread>

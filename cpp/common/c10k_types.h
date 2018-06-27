@@ -10,6 +10,8 @@
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
+#define BUFFER_SIZE 1024
+
 namespace c10k {
 
 using string = std::string;
