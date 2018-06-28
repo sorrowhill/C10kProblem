@@ -31,7 +31,8 @@ class PollIO : public VirtualIO {
   FileDescriptorHandler fd_handler_;
 
   std::mutex mutex_;
-  pollfd fd_set_[MAX_CONNECTIONS];
+  int max_index_;
+  pollfd master_set_[MAX_CONNECTIONS];
 };
 
 };

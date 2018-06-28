@@ -14,7 +14,7 @@ std::shared_ptr<c10k::VirtualIO> the_io;
 int main(int argc, char *argv[]) {
   const uint16_t port = 8040;
 
-  the_io = std::make_shared<c10k::PollIO>();
+  the_io = std::make_shared<c10k::SelectIO>();
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"

@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  the_io = std::make_shared<c10k::PollIO>();
+  the_io = std::make_shared<c10k::SelectIO>();
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"

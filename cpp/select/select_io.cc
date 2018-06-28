@@ -42,7 +42,12 @@ void SelectIO::RemoveSession(const int &fd) {
 
 
 void SelectIO::IOLoop() {
-  fd_set working_set = master_set_;
+  fd_set working_set;
+
+  {
+    std::lock_guard<std::mutex> guard(mutex_);
+    working_set = master_set_;
+  }
 
   int nb_fd = select(max_fd_ + 1, &working_set, nullptr, nullptr, nullptr);
   if (nb_fd < 0) {
